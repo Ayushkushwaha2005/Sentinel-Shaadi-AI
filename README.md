@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sentinel Shaadi AI
 
-## Getting Started
+AI-powered smart wedding planning platform built for hackathon Problem Statement 21.
 
-First, run the development server:
+## About Project
+
+Sentinel Shaadi AI is an intelligent wedding planning platform that helps users manage and organize weddings using AI recommendations, smart budgeting, emergency healthcare support, guest security, venue discovery, catering recommendations, and personalized planning.
+
+The platform reduces wedding planning stress by combining AI + real-time recommendations + smart safety features into one dashboard.
+
+---
+
+## Main Features
+
+- AI Wedding Planning Assistant
+- Smart Venue Recommendation
+- Catering Recommendation (Veg / Non-Veg)
+- Budget Estimation with GST
+- Emergency Medical Alert Panel
+- Nearby Specialized Hospitals
+- Nearby Doctors Contact
+- Guest Entry QR System
+- Personalized Wedding Suggestions
+- VIP Hotel Recommendations
+- Parking Availability Detection
+- Generator Availability Detection
+- Google Maps Integration
+- Wedding Checklist
+- Review & Rating System
+- Smart Dashboard UI
+- Mobile Responsive Design
+
+---
+
+## AI Features
+
+- Personalized Recommendations
+- Smart Budget Optimization
+- AI-Based Venue Matching
+- AI Wedding Summary Generator
+- Emergency Priority Suggestions
+
+---
+
+## Tech Stack
+
+### Frontend
+- Next.js
+- React
+- Tailwind CSS
+- TypeScript
+
+### UI
+- shadcn/ui
+- Framer Motion
+- Lucide Icons
+
+### APIs
+- Gemini API
+- Google Maps API
+
+---
+
+## Folder Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+app/
+components/
+data/
+lib/
+public/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Future Scope
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Real-time Booking System
+- Live Vendor Availability
+- AI Voice Assistant
+- Multi-language Support
+- Fraud Detection for Fake Guests
+- Smart Crowd Monitoring
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Team
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Built by Team Sentinel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Powered by EduSentinel AI
+
+---
+
+## Hackathon Theme Mapping
+
+This project solves wedding management problems using Artificial Intelligence, personalization, safety systems, smart recommendations, and emergency support systems.
+
+---
+
+## Status
+
+Project Under Active Development
