@@ -156,3 +156,31 @@ The platform focuses on the Lucknow wedding ecosystem including Gomti Nagar wedd
 - Real vendor database is not connected yet
 
 ---
+
+# Sentinel Shaadi AI 💍🤖
+
+AI-powered wedding planning platform built for hackathon submission.
+
+## 🚀 Live Demo
+https://sentinel-shaadi-ai.vercel.app/
+
+## 📂 GitHub Repository
+https://github.com/Ayushkushwaha2005/Sentinel-Shaadi-AI
+
+## ✨ Features
+- AI Wedding Planning
+- Budget Estimation
+- Venue Suggestions
+- Emergency Support
+- Guest Management
+- Smart Recommendations
+
+## 🛠 Tech Stack
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Gemini AI
+- Vercel
+
+## 👨‍💻 Team
+Ayush Kushwaha
