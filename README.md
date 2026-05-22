@@ -110,3 +110,49 @@ This project solves wedding management problems using Artificial Intelligence, p
 ## Status
 
 Project Under Active Development
+
+---
+
+## Team Information
+
+### Team Name
+Dhurandhar 2.0
+
+### Team Members
+
+- Ayush Kushwaha — GitHub: Ayushkushwaha2005
+
+---
+
+## Problem Statement
+
+### PS-21 — AI Concierge for Lucknow's Wedding and Event Industry
+
+Lucknow hosts thousands of weddings annually across banquet halls and farmhouses, all planned manually.
+
+Sentinel Shaadi AI is designed as an AI-powered event concierge platform that helps users discover, compare, personalize, and manage wedding planning services including venues, catering, decorations, photography, guest security, emergency healthcare support, hotels, and budgeting.
+
+The platform focuses on the Lucknow wedding ecosystem including Gomti Nagar wedding belt and surrounding event locations.
+
+---
+
+## AI Tools Used
+
+- ChatGPT
+- Gemini
+- Claude
+- GitHub Copilot
+- Cursor AI
+
+---
+
+## Known Limitations
+
+- This is currently a hackathon prototype/demo build
+- Real-time booking APIs are not integrated yet
+- AI negotiation system is simulated
+- QR guest validation is currently UI/demo based
+- Payment gateway integration not implemented
+- Real vendor database is not connected yet
+
+---
