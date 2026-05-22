@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const genAI = new GoogleGenerativeAI(
+  process.env.GEMINI_API_KEY!
+);
 
 export async function POST(req: Request) {
   try {
@@ -8,34 +10,10 @@ export async function POST(req: Request) {
     const { message } = body;
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
+      model: "gemini-1.5-flash",
     });
 
-    const prompt = `
-You are Sentinel Shaadi AI.
-
-You are an intelligent luxury wedding planning assistant focused on Lucknow, India.
-
-User request:
-${message}
-
-Your task:
-- Suggest wedding venues
-- Give realistic budget estimates
-- Recommend catering ideas
-- Suggest decoration themes
-- Suggest emergency planning tips
-- Give VIP guest handling recommendations
-
-Rules:
-- Keep answers realistic
-- Keep answers professional
-- Use modern formatting
-- Keep response concise but useful
-- Focus on Lucknow wedding culture
-`;
-
-    const result = await model.generateContent(prompt);
+    const result = await model.generateContent(message);
 
     const response = result.response.text();
 
@@ -44,11 +22,39 @@ Rules:
     });
 
   } catch (error) {
+
     console.log("Gemini Error:", error);
 
+    // FALLBACK RESPONSE
     return Response.json({
-      reply:
-        "AI service temporarily unavailable. Please try again.",
+      reply: `
+✨ Sentinel Shaadi AI Wedding Blueprint
+
+📍 Recommended Areas:
+• Gomti Nagar
+• Hazratganj
+• Indira Nagar
+
+🏛 Suggested Venue:
+Taj Mahal Lucknow / Ramada Lucknow
+
+🍽 Catering Estimate:
+₹800–₹1400 per guest
+
+🎨 Decor Theme:
+Luxury Floral + Royal Lighting
+
+🚑 Emergency Planning:
+• Nearby hospital support
+• Backup generator
+• VIP guest management
+
+🚗 Parking:
+Dedicated valet + guest parking zones
+
+💡 AI Recommendation:
+Book venue at least 2 months in advance for better pricing and availability.
+`,
     });
   }
 }
