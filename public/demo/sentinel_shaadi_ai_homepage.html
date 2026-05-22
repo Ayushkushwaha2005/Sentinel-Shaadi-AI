@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/framer-motion@11/dist/framer-motion.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080812;color:white;font-family:'Inter',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#080812}
+::-webkit-scrollbar-thumb{background:rgba(66,133,244,0.4);border-radius:2px}
+::selection{background:rgba(66,133,244,0.3)}
+
+.rajdhani{font-family:'Rajdhani',sans-serif}
+.glass{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;position:relative;overflow:hidden;transition:box-shadow 0.3s,transform 0.2s}
+.glass:hover{transform:translateY(-2px)}
+.glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px}
+
+.btn-primary{background:linear-gradient(135deg,#4285F4,#AA44FF);border:none;border-radius:9999px;color:white;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:14px;transition:transform 0.2s,box-shadow 0.2s;font-family:'Inter',sans-serif}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 35px rgba(66,133,244,0.5)}
+.btn-ghost{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:9999px;color:white;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:14px;transition:transform 0.2s;font-family:'Inter',sans-serif}
+.btn-ghost:hover{transform:scale(1.04)}
+
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:9999px;font-size:11px;font-weight:700;letter-spacing:0.04em}
+
+.grid-pattern{background-image:linear-gradient(rgba(66,133,244,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(66,133,244,0.08) 1px,transparent 1px);background-size:60px 60px}
+
+input,select{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:white;padding:12px 16px;font-size:14px;width:100%;outline:none;transition:border-color 0.2s,box-shadow 0.2s;font-family:'Inter',sans-serif}
+input::placeholder{color:rgba(255,255,255,0.2)}
+input:focus,select:focus{border-color:rgba(66,133,244,0.5);box-shadow:0 0 16px rgba(66,133,244,0.15)}
+select option{background:#0a0a16;color:white}
+
+label{display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+
+.ping-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:#ef4444}
+.ping-ring{position:absolute;width:8px;height:8px;border-radius:50%;background:rgba(239,68,68,0.5);animation:ping 1.5s cubic-bezier(0,0,0.2,1) infinite}
+@keyframes ping{0%{transform:scale(1);opacity:0.7}100%{transform:scale(2.5);opacity:0}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes glow{0%,100%{opacity:0.15}50%{opacity:0.3}}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes pulseRed{0%,100%{box-shadow:0 0 20px rgba(234,67,53,0.2)}50%{box-shadow:0 0 50px rgba(234,67,53,0.4)}}
+
+.fade-up{animation:fadeUp 0.7s ease both}
+.delay-1{animation-delay:0.1s}.delay-2{animation-delay:0.2s}.delay-3{animation-delay:0.3s}.delay-4{animation-delay:0.4s}.delay-5{animation-delay:0.5s}
+
+.gradient-text-main{background:linear-gradient(135deg,#4285F4 0%,#AA44FF 40%,#EA4335 70%,#FBBC04 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gradient-text-green{background:linear-gradient(90deg,#34A853,#4285F4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gradient-text-blue{background:linear-gradient(90deg,#4285F4,#AA44FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.emergency-card{border:1px solid rgba(234,67,53,0.35);background:rgba(234,67,53,0.04);backdrop-filter:blur(20px);border-radius:16px;position:relative;overflow:hidden;animation:pulseRed 3s ease infinite}
+
+.stat-card{text-align:center;padding:16px;cursor:default}
+.stat-value{font-size:26px;font-weight:900;color:white;font-family:'Rajdhani',sans-serif;line-height:1}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px}
+
+.feature-chip{text-align:center;padding:16px 12px;cursor:pointer;transition:transform 0.2s}
+.feature-chip:hover{transform:translateY(-4px)}
+.feature-icon{width:40px;height:40px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;position:relative}
+.nav-link:hover{color:white}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:linear-gradient(90deg,#4285F4,#AA44FF);transition:width 0.3s}
+.nav-link:hover::after{width:100%}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}.stats-grid{grid-template-columns:1fr 1fr}.feat-grid{grid-template-columns:1fr 1fr}.em-grid{grid-template-columns:1fr 1fr}}
+
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)}
+
+.btn-emergency{background:linear-gradient(135deg,#EA4335,#c0392b);border:none;border-radius:9999px;color:white;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:10px 24px;font-size:13px;transition:transform 0.2s,box-shadow 0.2s;font-family:'Inter',sans-serif}
+.btn-emergency:hover{transform:scale(1.04);box-shadow:0 0 25px rgba(234,67,53,0.5)}
+.btn-em-outline{background:transparent;border:1px solid rgba(234,67,53,0.35);border-radius:9999px;color:#EA4335;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:10px 24px;font-size:13px;transition:transform 0.2s;font-family:'Inter',sans-serif}
+.btn-em-outline:hover{transform:scale(1.03)}
+
+canvas{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar" style="position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.3s,border-bottom 0.3s;padding:0 24px">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;background:linear-gradient(135deg,#4285F4,#AA44FF);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;position:relative">
+        ✦
+        <div style="position:absolute;inset:0;border-radius:10px;filter:blur(8px);background:linear-gradient(135deg,#4285F4,#AA44FF);opacity:0.5;z-index:-1"></div>
+      </div>
+      <span class="rajdhani" style="font-size:18px;font-weight:700;letter-spacing:0.03em">
+        <span style="color:#4285F4">Sentinel</span>
+        <span style="color:white"> Shaadi </span>
+        <span style="background:linear-gradient(90deg,#EA4335,#FBBC04,#34A853,#4285F4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AI</span>
+      </span>
+    </div>
+    <div style="display:flex;align-items:center;gap:32px">
+      <a href="#" class="nav-link">Home</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#plan" class="nav-link">Dashboard</a>
+      <a href="#emergency" class="nav-link">Emergency</a>
+    </div>
+    <button class="btn-primary" style="padding:9px 22px;font-size:13px">
+      Get Started →
+    </button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:100px 24px 80px">
+  <!-- Mesh blobs -->
+  <div style="position:absolute;top:-100px;left:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,#4285F4,transparent 70%);filter:blur(80px);opacity:0.18;animation:glow 4s ease infinite"></div>
+  <div style="position:absolute;bottom:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,#AA44FF,transparent 70%);filter:blur(80px);opacity:0.18;animation:glow 4s ease infinite 2s"></div>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,#EA4335,transparent 60%);filter:blur(60px);opacity:0.07"></div>
+  <!-- Grid -->
+  <div class="grid-pattern" style="position:absolute;inset:0;opacity:1"></div>
+  <!-- Canvas -->
+  <canvas id="heroCanvas"></canvas>
+
+  <div style="position:relative;z-index:10;max-width:860px;text-align:center">
+    <div class="badge fade-up" style="background:rgba(66,133,244,0.12);border:1px solid rgba(66,133,244,0.3);color:#4285F4;margin-bottom:28px">
+      <span style="font-size:14px">✦</span>
+      Powered by Sentinel AI Engine v2.0
+      <span style="width:6px;height:6px;border-radius:50%;background:#34A853;animation:ping 2s infinite;display:inline-block"></span>
+    </div>
+
+    <h1 class="rajdhani fade-up delay-1" style="font-size:clamp(44px,8vw,80px);font-weight:700;line-height:1.05;margin-bottom:20px;letter-spacing:-0.01em">
+      <span style="color:white">Plan Your </span><span class="gradient-text-main">Dream Wedding</span><br>
+      <span style="color:white">with </span><span class="gradient-text-green">AI</span>
+    </h1>
+
+    <p class="fade-up delay-2" style="font-size:17px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:600px;margin:0 auto 36px">
+      AI-powered wedding planning for venues, catering, hotels, budgeting, emergency healthcare, and personalized recommendations — all in one premium dashboard.
+    </p>
+
+    <div class="hero-btns fade-up delay-3" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:64px">
+      <button class="btn-primary" style="font-size:15px;padding:14px 32px">
+        ✦ Start Planning
+      </button>
+      <button class="btn-ghost" style="font-size:15px;padding:14px 32px">
+        <span style="width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,0.35);display:inline-flex;align-items:center;justify-content:center;font-size:11px">▶</span>
+        Watch Demo
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid fade-up delay-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:680px;margin:0 auto">
+      <div class="glass stat-card" style="--glow:#4285F4"><div class="glass-glow" style="background:#4285F4"></div>
+        <div class="stat-value">50K+</div><div class="stat-label">Weddings Planned</div>
+      </div>
+      <div class="glass stat-card">
+        <div class="stat-value">99%</div><div class="stat-label">Satisfaction Rate</div>
+      </div>
+      <div class="glass stat-card">
+        <div class="stat-value">200+</div><div class="stat-label">Venue Partners</div>
+      </div>
+      <div class="glass stat-card">
+        <div class="stat-value">24/7</div><div class="stat-label">AI Support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ─── FEATURES ─── -->
+<section id="features" style="padding:60px 24px;background:#0a0a16">
+  <div style="max-width:1100px;margin:0 auto">
+    <p style="text-align:center;font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:28px">Everything you need for your perfect wedding</p>
+    <div class="feat-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
+      <div class="glass feature-chip" style="--c:#4285F4">
+        <div class="feature-icon" style="background:rgba(66,133,244,0.15)">🤖</div>
+        <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);line-height:1.3">AI Planning Engine</p>
+      </div>
+      <div class="glass feature-chip">
+        <div class="feature-icon" style="background:rgba(234,67,53,0.15)">🏥</div>
+        <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);line-height:1.3">Emergency Healthcare</p>
+      </div>
+      <div class="glass feature-chip">
+        <div class="feature-icon" style="background:rgba(52,168,83,0.15)">🌐</div>
+        <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);line-height:1.3">Venue Discovery</p>
+      </div>
+      <div class="glass feature-chip">
+        <div class="feature-icon" style="background:rgba(251,188,4,0.15)">👑</div>
+        <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);line-height:1.3">VIP Experiences</p>
+      </div>
+      <div class="glass feature-chip">
+        <div class="feature-icon" style="background:rgba(170,68,255,0.15)">⚡</div>
+        <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);line-height:1.3">Instant Budgeting</p>
+      </div>
+      <div class="glass feature-chip">
+        <div class="feature-icon" style="background:rgba(0,188,212,0.15)">💎</div>
+        <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);line-height:1.3">Personalized Themes</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ─── PLANNING FORM ─── -->
+<section id="plan" style="padding:80px 24px;background:#080812;position:relative;overflow:hidden">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,#4285F4,transparent 60%);filter:blur(80px);opacity:0.08;pointer-events:none"></div>
+
+  <div style="max-width:900px;margin:0 auto;position:relative;z-index:10">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="badge" style="background:rgba(52,168,83,0.1);border:1px solid rgba(52,168,83,0.3);color:#34A853;margin-bottom:16px">
+        ✓ AI-Powered Planning Form
+      </div>
+      <h2 class="rajdhani" style="font-size:clamp(30px,5vw,48px);font-weight:700;color:white;margin-bottom:14px">
+        Customize Your <span class="gradient-text-blue">Wedding Blueprint</span>
+      </h2>
+      <p style="color:rgba(255,255,255,0.4);font-size:14px;max-width:520px;margin:0 auto;line-height:1.7">
+        Fill in your preferences and let our AI orchestrate every detail — venues, catering, decor, and beyond.
+      </p>
+    </div>
+
+    <div class="glass" style="padding:40px">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#4285F499,transparent)"></div>
+
+      <!-- Text inputs -->
+      <div class="form-grid" style="margin-bottom:20px">
+        <div>
+          <label>💰 Budget (₹)</label>
+          <input type="text" placeholder="e.g. ₹15,00,000" />
+        </div>
+        <div>
+          <label>👥 Guest Count</label>
+          <input type="number" placeholder="e.g. 300 guests" />
+        </div>
+        <div>
+          <label>📍 Location</label>
+          <input type="text" placeholder="e.g. Mumbai, Delhi" />
+        </div>
+        <div>
+          <label>📅 Wedding Date</label>
+          <input type="date" style="color-scheme:dark" />
+        </div>
+      </div>
+
+      <!-- Select inputs -->
+      <div class="form-grid" style="margin-bottom:32px">
+        <div>
+          <label>🍽️ Food Preference</label>
+          <select>
+            <option value="" disabled selected>Select preference</option>
+            <option>Veg Only</option><option>Non-Veg</option>
+            <option>Jain Veg</option><option>Mix — Veg &amp; Non-Veg</option>
+          </select>
+        </div>
+        <div>
+          <label>🎨 Theme Style</label>
+          <select>
+            <option value="" disabled selected>Select theme</option>
+            <option>Royal / Mughal</option><option>Modern Minimalist</option>
+            <option>Floral Garden</option><option>Beach / Destination</option>
+            <option>Bollywood Glam</option><option>Rustic / Heritage</option>
+          </select>
+        </div>
+        <div>
+          <label>👑 VIP Preference</label>
+          <select>
+            <option value="" disabled selected>Select tier</option>
+            <option>Standard</option><option>Premium</option>
+            <option>Ultra VIP</option><option>Celebrity Tier</option>
+          </select>
+        </div>
+        <div>
+          <label>🚗 Parking Required</label>
+          <select>
+            <option value="" disabled selected>Select capacity</option>
+            <option>Not Required</option><option>Up to 50 vehicles</option>
+            <option>50–200 vehicles</option><option>200+ vehicles</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <button class="btn-primary" style="font-size:15px;padding:14px 36px" id="planBtn">
+          ✦ Generate AI Wedding Plan →
+        </button>
+        <div id="aiResponse" style="
+margin-top:20px;
+padding:20px;
+border-radius:16px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+color:white;
+display:none;
+line-height:1.7;
+font-size:14px;
+"></div>
+        <div id="planSuccess" style="display:none;color:#34A853;font-size:13px;font-weight:600;display:none;align-items:center;gap:6px">
+          ✓ Plan queued — AI is on it!
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ─── EMERGENCY ─── -->
+<section id="emergency" style="padding:80px 24px;background:#0a0a16;position:relative;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(234,67,53,0.4),transparent)"></div>
+
+  <div style="max-width:900px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="badge" style="background:rgba(234,67,53,0.1);border:1px solid rgba(234,67,53,0.3);color:#EA4335;margin-bottom:16px">
+        <span style="width:8px;height:8px;border-radius:50%;background:#EA4335;display:inline-block;animation:ping 1.5s infinite"></span>
+        Emergency Ready — 24/7
+      </div>
+      <h2 class="rajdhani" style="font-size:clamp(30px,5vw,48px);font-weight:700;color:white;margin-bottom:14px">
+        Wedding Day <span style="color:#EA4335">Emergency</span> Support
+      </h2>
+      <p style="color:rgba(255,255,255,0.4);font-size:14px;max-width:500px;margin:0 auto;line-height:1.7">
+        Real-time emergency healthcare coordination embedded directly into your wedding plan.
+      </p>
+    </div>
+
+    <!-- Emergency Card -->
+    <div class="emergency-card">
+      <!-- Top glow bar -->
+      <div style="height:3px;background:linear-gradient(90deg,transparent,#EA4335,#FBBC04,#EA4335,transparent)"></div>
+
+      <!-- Corner pings -->
+      <div style="position:absolute;top:14px;left:14px"><div class="ping-ring"></div><div class="ping-dot"></div></div>
+      <div style="position:absolute;top:14px;right:14px"><div class="ping-ring"></div><div class="ping-dot"></div></div>
+      <div style="position:absolute;bottom:14px;left:14px"><div class="ping-ring"></div><div class="ping-dot"></div></div>
+      <div style="position:absolute;bottom:14px;right:14px"><div class="ping-ring"></div><div class="ping-dot"></div></div>
+
+      <div style="padding:36px">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px">
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="width:48px;height:48px;border-radius:14px;background:rgba(234,67,53,0.15);border:1px solid rgba(234,67,53,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;position:relative">
+              ⚠️
+              <div style="position:absolute;inset:0;border-radius:14px;filter:blur(12px);background:#EA4335;opacity:0.2"></div>
+            </div>
+            <div>
+              <h3 class="rajdhani" style="font-size:20px;font-weight:700;color:white">Emergency Response Unit</h3>
+              <p style="font-size:12px;color:rgba(234,67,53,0.7);margin-top:2px">Assigned to your wedding venue · Active</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:9999px;background:rgba(234,67,53,0.15);border:1px solid rgba(234,67,53,0.3);color:#EA4335;font-size:12px;font-weight:700">
+            <span style="width:7px;height:7px;border-radius:50%;background:#EA4335;display:inline-block;animation:ping 1.5s infinite"></span>
+            LIVE
+          </div>
+        </div>
+
+        <!-- Info cards -->
+        <div class="em-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px">
+          <div style="padding:16px;border-radius:14px;background:rgba(234,67,53,0.08);border:1px solid rgba(234,67,53,0.2);transition:transform 0.2s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+              <span style="font-size:14px">❤️</span>
+              <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.06em">Nearby Hospital</span>
+            </div>
+            <p style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">Apollo Hospitals</p>
+            <p style="font-size:11px;color:rgba(255,255,255,0.4)">2.4 km away · 4 min ETA</p>
+          </div>
+          <div style="padding:16px;border-radius:14px;background:rgba(251,188,4,0.08);border:1px solid rgba(251,188,4,0.2);transition:transform 0.2s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+              <span style="font-size:14px">🛡️</span>
+              <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.06em">Emergency Support</span>
+            </div>
+            <p style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">24/7 On-Site Medic</p>
+            <p style="font-size:11px;color:rgba(255,255,255,0.4)">Dr. Sharma on standby</p>
+          </div>
+          <div style="padding:16px;border-radius:14px;background:rgba(52,168,83,0.08);border:1px solid rgba(52,168,83,0.2);transition:transform 0.2s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+              <span style="font-size:14px">📞</span>
+              <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.06em">Doctor Contact</span>
+            </div>
+            <p style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">+91 98765 43210</p>
+            <p style="font-size:11px;color:rgba(255,255,255,0.4)">Dr. Priya Verma, MBBS</p>
+          </div>
+          <div style="padding:16px;border-radius:14px;background:rgba(66,133,244,0.08);border:1px solid rgba(66,133,244,0.2);transition:transform 0.2s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+              <span style="font-size:14px">🚑</span>
+              <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.06em">Ambulance Status</span>
+            </div>
+            <p style="font-size:14px;font-weight:700;color:white;margin-bottom:4px">Available — 3 Units</p>
+            <p style="font-size:11px;color:rgba(255,255,255,0.4)">Advanced Life Support</p>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn-emergency">📞 Call Emergency Now</button>
+          <button class="btn-em-outline">🕐 View Full Emergency Plan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer style="padding:32px 24px;border-top:1px solid rgba(255,255,255,0.07);background:#080812">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:28px;height:28px;background:linear-gradient(135deg,#4285F4,#AA44FF);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px">✦</div>
+      <span class="rajdhani" style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.6)">Sentinel Shaadi AI</span>
+    </div>
+    <p style="font-size:11px;color:rgba(255,255,255,0.2)">© 2025 Sentinel Shaadi AI · Built for Hackathon · Powered by Sentinel Engine</p>
+    <div style="display:flex;gap:20px">
+      <a href="#" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none">Privacy</a>
+      <a href="#" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none">Terms</a>
+      <a href="#" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── Navbar scroll effect
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  if(window.scrollY>50){
+    nav.style.background='rgba(8,8,18,0.9)';
+    nav.style.backdropFilter='blur(20px)';
+    nav.style.borderBottom='1px solid rgba(255,255,255,0.07)';
+  }else{
+    nav.style.background='transparent';
+    nav.style.backdropFilter='none';
+    nav.style.borderBottom='none';
+  }
+});
+
+// ─── RGB Particle Canvas
+const canvas=document.getElementById('heroCanvas');
+const ctx=canvas.getContext('2d');
+const COLORS=['#4285F4','#EA4335','#FBBC04','#34A853','#AA44FF','#00BCD4'];
+let particles=[];
+
+function resize(){
+  canvas.width=canvas.parentElement.offsetWidth;
+  canvas.height=canvas.parentElement.offsetHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+for(let i=0;i<70;i++){
+  particles.push({
+    x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+    size:Math.random()*2.5+0.8,
+    color:COLORS[Math.floor(Math.random()*COLORS.length)],
+    vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5,
+    op:Math.random()*0.6+0.2
+  });
+}
+
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0||p.x>canvas.width)p.vx*=-1;
+    if(p.y<0||p.y>canvas.height)p.vy*=-1;
+    const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.size*5);
+    g.addColorStop(0,p.color+'BB');g.addColorStop(1,p.color+'00');
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size*5,0,Math.PI*2);
+    ctx.fillStyle=g;ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle=p.color;ctx.globalAlpha=p.op;ctx.fill();ctx.globalAlpha=1;
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ─── Glass card hover glows
+document.querySelectorAll('.glass').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    el.style.boxShadow='0 0 30px rgba(66,133,244,0.18)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    el.style.boxShadow='none';
+  });
+});
+
+// ─── Plan button
+document.getElementById('planBtn').addEventListener('click', async function () {
+
+    const budget = document.querySelector('input[placeholder*="₹"]').value;
+    const guests = document.querySelector('input[placeholder*="guests"]').value;
+    const location = document.querySelector('input[placeholder*="Mumbai"]').value;
+    const theme = document.querySelectorAll('select')[1].value;
+
+    const responseBox = document.getElementById('aiResponse');
+
+    this.textContent = "Generating Your AI Plan...";
+    this.style.opacity = "0.8";
+
+    responseBox.style.display = "block";
+    responseBox.innerHTML = "🤖 AI is planning your wedding...";
+
+    try {
+
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: `
+Create a wedding plan.
+
+Budget: ${budget}
+Guests: ${guests}
+Location: ${location}
+Theme: ${theme}
+
+Give:
+- Venue suggestions
+- Catering ideas
+- Decoration style
+- Estimated budget split
+- Lucknow specific recommendations
+`
+            })
+        });
+
+        const data = await res.json();
+
+        responseBox.innerHTML = `
+<h3 style="margin-bottom:14px;color:#7c9cff;">
+✨ AI Wedding Recommendation
+</h3>
+
+<div style="white-space:pre-line;">
+${data.reply}
+</div>
+`;
+
+    } catch (error) {
+
+        responseBox.innerHTML = `
+<span style="color:#ff6b6b;">
+Something went wrong while generating AI response.
+</span>
+`;
+
+    }
+
+    this.textContent = "✦ Generate AI Wedding Plan →";
+    this.style.opacity = "1";
+
+});
+
+// ─── Input focus glows
+document.querySelectorAll('input,select').forEach(el=>{
+  el.addEventListener('focus',()=>{
+    el.style.borderColor='rgba(66,133,244,0.5)';
+    el.style.boxShadow='0 0 16px rgba(66,133,244,0.15)';
+    el.style.background='rgba(66,133,244,0.07)';
+  });
+  el.addEventListener('blur',()=>{
+    el.style.borderColor='rgba(255,255,255,0.1)';
+    el.style.boxShadow='none';
+    el.style.background='rgba(255,255,255,0.05)';
+  });
+});
+
+// ─── Feature chip glows
+const chipColors=['#4285F4','#EA4335','#34A853','#FBBC04','#AA44FF','#00BCD4'];
+document.querySelectorAll('.feature-chip').forEach((el,i)=>{
+  el.addEventListener('mouseenter',()=>{
+    el.style.boxShadow=`0 0 24px ${chipColors[i%chipColors.length]}33`;
+    el.style.borderColor=chipColors[i%chipColors.length]+'40';
+  });
+  el.addEventListener('mouseleave',()=>{
+    el.style.boxShadow='none';
+    el.style.borderColor='rgba(255,255,255,0.08)';
+  });
+});
+</script>
+<script>
+async function generateAIPlan() {
+
+const budget =
+document.querySelector('input[placeholder*="₹"]')?.value || "";
+
+const guests =
+document.querySelector('input[placeholder*="guests"]')?.value || "";
+
+const location =
+document.querySelector('input[placeholder*="Mumbai"]')?.value || "";
+
+const selects = document.querySelectorAll("select");
+
+const food = selects[0]?.value || "";
+const theme = selects[1]?.value || "";
+const vip = selects[2]?.value || "";
+const parking = selects[3]?.value || "";
+
+const responseBox =
+document.getElementById("ai-response");
+
+responseBox.style.display = "block";
+responseBox.innerHTML = "Generating AI wedding plan...";
+
+const prompt = `
+Budget: ${budget}
+Guests: ${guests}
+Location: ${location}
+Food: ${food}
+Theme: ${theme}
+VIP: ${vip}
+Parking: ${parking}
+`;
+
+try {
+
+const res = await fetch("/api/chat", {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+},
+body: JSON.stringify({
+message: prompt,
+}),
+});
+
+const data = await res.json();
+
+responseBox.innerHTML = `
+<h2 style="margin-bottom:12px;">
+AI Wedding Recommendation
+</h2>
+
+<div style="white-space:pre-line;">
+${data.reply}
+</div>
+`;
+
+} catch (err) {
+
+responseBox.innerHTML =
+"Something went wrong while generating AI response.";
+
+}
+
+}
+</script>
+</body>
+</html>
